@@ -7,7 +7,7 @@ Created on Sun Oct  7 10:52:07 2018
 import pickle
 
 contacts = {}
-
+contactList = []
 
 def load():
     """ Load saved contacts from file. """
@@ -59,11 +59,11 @@ def menu():
     
     try:
         order = int(input("""Please select an operation (Enter number):
-            1. View Contacts
-            2. Add new contact
-            3. Edit contact
-            4. Delete contact
-            -->"""))
+            \n1. View Contacts
+            \n2. Add new contact
+            \n3. Edit contact
+            \n4. Delete contact
+            \n-->"""))
         if order == 1:
             listContacts()
         elif order == 2:
@@ -80,11 +80,44 @@ def menu():
 
         
 def listContacts():
-    """ Print contacts. """
+    """ Print contacts list. """
     
-    for i in contacts:
-        print("{0} | {1}".format(i, contacts[i]))
-    menu()
+    global contactList
+    contactList = list(contacts.keys())
+    contactList.sort()
+    index = 0
+    for contact in contactList:
+        print("{0} --> {1}".format(index,contact))
+        index +=1
+    try:
+        order = int(input("""whay do you want? (Enter Number)
+                      \n1. View a contact
+                      \n2. Return to Menu
+                      \n-->"""))
+        if order ==1:
+            viewPerson()
+        elif order ==2:
+            menu()
+        else:
+            print("Error: Invalid operation")
+            menu()
+    except:#if order isn't a number, int() raise an error.
+        print("This isn't an integer")
+        menu()
+           
+def viewPerson():
+    try:
+        index = int(input("Enter Contact's index -->"))
+        contact = contacts[contactList[index]]
+        print("Contact Name: {}".format(contactList[index]))
+        print("Contact Details:")
+        for i in contact:
+            print(i)
+        menu()
+        
+    except:#if order isn't a number, int() raise an error.
+        print("This isn't an integer")
+        menu()
     
 def addPerson():
     """ Run from menu() to add a person and run setPerson() with given data. """
@@ -94,10 +127,10 @@ def addPerson():
     email = input("Enter contact's Email -->")
     try:
         Type = int(input("""Enter contact's Type:
-            1. Family
-            2. Friend
-            3. Colleague
-                     -->"""))
+            \n1. Family
+            \n2. Friend
+            \n3. Colleague
+            \n-->"""))
     except:#if order isn't a number, int() raise an error.
         print("This isn't an integer")
         menu()
@@ -120,12 +153,11 @@ def editPerson():
         newName = ""#used to creat new contact
         try:
             item = int(input("""Enter item's number to edit:
-                1.Name
-                2.Number
-                3.Email
-                4.Type
-                -->
-                """))
+                \n1.Name
+                \n2.Number
+                \n3.Email
+                \n4.Type
+                \n-->"""))
             if item == 1:
                 newName = input("Enter new name -->")
             elif item == 2:
@@ -135,11 +167,10 @@ def editPerson():
             elif item == 4:
                 try:
                     value = int(input("""Enter new Type's number:
-                        1. Family
-                        2. Friend
-                        3. Colleague
-                        -->
-                        """))
+                        \n1. Family
+                        \n2. Friend
+                        \n3. Colleague
+                        \n-->"""))
                     contact[2] = setType(value)
                 except:#if order isn't a number, int() raise an error.
                     print("This isn't an integer")
