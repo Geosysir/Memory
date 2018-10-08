@@ -1,3 +1,3 @@
 # Memory
 
-A tiny contact manager just for fun.
+A tiny contact manager with Python, just for fun.
