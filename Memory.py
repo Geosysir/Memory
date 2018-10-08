@@ -12,9 +12,12 @@ contactList = []
 def load():
     """ Load saved contacts from file. """
     
-    with open("Memory.data", "rb") as f:
-        global contacts
-        contacts = pickle.load(f)
+    try:
+        with open("Memory.data", "rb") as f:
+            global contacts
+            contacts = pickle.load(f)
+    except:#If no file found, so user is newbie.
+        print("Hi, Welcome to Memory..")
 def save():
     """ Save contacts to file. """
     
@@ -84,6 +87,9 @@ def listContacts():
     
     global contactList
     contactList = list(contacts.keys())
+    if len(contactList) == 0:#If ContactList is empty, run menu() with a message.
+        print("There is no contacts. but don't worry, You can add them if you want.")
+        menu()
     contactList.sort()
     for contact in contactList:
         print("{0} --> {1}".format(contactList.index(contact),contact))
