@@ -85,10 +85,8 @@ def listContacts():
     global contactList
     contactList = list(contacts.keys())
     contactList.sort()
-    index = 0
     for contact in contactList:
-        print("{0} --> {1}".format(index,contact))
-        index +=1
+        print("{0} --> {1}".format(contactList.index(contact),contact))
     try:
         order = int(input("""whay do you want? (Enter Number)
                       \n1. View a contact
