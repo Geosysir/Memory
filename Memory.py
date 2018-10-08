@@ -106,11 +106,16 @@ def listContacts():
 def viewPerson():
     try:
         index = int(input("Enter Contact's index -->"))
-        contact = contacts[contactList[index]]
-        print("Contact Name: {}".format(contactList[index]))
+        contact = contacts[contactList[index]]#Selected contact to view.
+        sep="-"*20
+        print(sep)
+        print("\nContact Name: {}\n".format(contactList[index]))
         print("Contact Details:")
-        for i in contact:
-            print(i)
+        print("""\nNumber: {0}
+                 \nEmail: {1}
+                 \nType: {2}
+                """.format(contact[0],contact[1],contact[2]))
+        print(sep)
         menu()
         
     except:#if order isn't a number, int() raise an error.
