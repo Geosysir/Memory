@@ -25,7 +25,9 @@ def save():
         pickle.dump(contacts,f)
     
 def checkExist(name):
-    """ Check if a contact exists. """
+    """ checkExist(name)
+    
+    Check if name exists in contactList and return True or False. """
     
     listContacts(False)
     if name in contactList:
@@ -84,6 +86,12 @@ def menu():
 
         
 def listContacts(capital):
+    """ listContacts(boolean)
+    
+    Call whenever a list of contacts keys needed, e.g. in checkExist().
+    Initialize contactList[] with keys in contacts{}
+    and make key Capitalize or lowecase according to given capital variable. """
+    
     global contactList
     if capital:
         contactList = [key.capitalize() for key in contacts.keys()]
