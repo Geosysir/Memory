@@ -27,7 +27,8 @@ def save():
 def checkExist(name):
     """ Check if a contact exists. """
     
-    if name in contacts.keys():
+    listContacts(False)
+    if name in contactList:
         return True
     else:
         return False
@@ -68,7 +69,7 @@ def menu():
             \n4. Delete contact
             \n-->"""))
         if order == 1:
-            listContacts()
+            showContacts()
         elif order == 2:
             addPerson()
         elif order == 3:
@@ -82,11 +83,17 @@ def menu():
         menu()
 
         
-def listContacts():
+def listContacts(capital):
+    global contactList
+    if capital:
+        contactList = [key.capitalize() for key in contacts.keys()]
+    else:
+        contactList = [key.lower() for key in contacts.keys()]
+    
+def showContacts():
     """ Print contacts list. """
     
-    global contactList
-    contactList = list(contacts.keys())
+    listContacts(True)
     if len(contactList) == 0:#If ContactList is empty, run menu() with a message.
         print("There is no contacts. but don't worry, You can add them if you want.")
         menu()
@@ -131,7 +138,7 @@ def viewPerson():
 def addPerson():
     """ Run from menu() to add a person and run setPerson() with given data. """
     
-    name = input("Enter contact's name -->")
+    name = input("Enter contact's name -->").capitalize()
     number = input("Enter contact's number -->")
     email = input("Enter contact's Email -->")
     try:
@@ -154,8 +161,8 @@ def editPerson():
     using setPerson().
     """
     
-    name = input("Enter Contact's name -->")
-    if not checkExist(name):#Check if given name exist in contacts dict.
+    name = input("Enter Contact's name -->").capitalize()
+    if not checkExist(name.lower()):#Check if given name exist in contacts dict.
         print("This Contact doesn't exist")
     else:
         contact = contacts[name]
@@ -168,7 +175,7 @@ def editPerson():
                 \n4.Type
                 \n-->"""))
             if item == 1:
-                newName = input("Enter new name -->")
+                newName = input("Enter new name -->").capitalize()
             elif item == 2:
                 contact[0] = input("Enter new number -->")
             elif item == 3:
@@ -201,8 +208,8 @@ def editPerson():
 def delPerson():
     """ Run from menu() to delete existing contact. """
     
-    name = input("Enter contact's name -->")
-    if checkExist(name):#check if given name exist in contacts dict. 
+    name = input("Enter contact's name -->").capitalize()
+    if checkExist(name.lower()):#check if given name exist in contacts dict. 
         confirm = input("Are you sure to delete {0}? (Y,N)".format(name))
         if confirm.upper() == "Y":
             del contacts[name]
